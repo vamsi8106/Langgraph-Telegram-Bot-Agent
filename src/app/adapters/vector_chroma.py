@@ -1,16 +1,3 @@
-# from langchain_openai import OpenAIEmbeddings
-# from langchain_chroma import Chroma
-# from ..config.settings import settings
-
-# def build_vectorstore(collection: str = "karan_bio"):
-#     embeddings = OpenAIEmbeddings(model=settings.openai_embed_model)
-#     vs = Chroma(
-#         collection_name=collection,
-#         embedding_function=embeddings,
-#         persist_directory=settings.persist_dir,
-#     )
-#     return vs
-
 # src/app/adapters/vector_chroma.py
 from __future__ import annotations
 

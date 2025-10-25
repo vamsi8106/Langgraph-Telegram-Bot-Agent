@@ -1,12 +1,3 @@
-# from app.di import build_container
-
-# def test_container_builds():
-#     c = build_container()
-#     assert c.llm is not None
-#     assert c.vector is not None
-#     assert c.tts is not None
-#     assert c.image_gen is not None
-
 # tests/unit/test_di_swapping.py
 from dataclasses import dataclass
 

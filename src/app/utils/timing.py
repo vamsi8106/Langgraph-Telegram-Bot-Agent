@@ -1,14 +1,3 @@
-# import time
-# from contextlib import contextmanager
-
-# @contextmanager
-# def timer(cb):
-#     t0 = time.perf_counter()
-#     try:
-#         yield
-#     finally:
-#         cb(time.perf_counter() - t0)
-
 # src/app/utils/timing.py
 """
 Utility for lightweight execution timing.

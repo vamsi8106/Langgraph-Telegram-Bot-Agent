@@ -1,27 +1,3 @@
-# global:
-#   scrape_interval: 10s
-#   evaluation_interval: 10s
-
-# scrape_configs:
-#   # Prometheus self-scrape
-#   - job_name: "prometheus"
-#     static_configs:
-#       - targets: ["localhost:9090"]
-
-#   # Your bot app, on the host machine (needs extra_hosts in docker-compose)
-#   - job_name: "karan-bot"
-#     static_configs:
-#       - targets: ["host.docker.internal:9000"]
-
-#   # # OpenTelemetry Collector's Prometheus exporter (scrape endpoint)
-#   # - job_name: "otel-collector"
-#   #   static_configs:
-#   #     - targets: ["otel-collector:8888"]
-#   # OpenTelemetry Collector's Prometheus exporter (scrape endpoint)
-#   - job_name: "otel-collector"
-#     static_configs:
-#       - targets: ["host.docker.internal:8888"]
-
 global:
   scrape_interval: 10s
   evaluation_interval: 10s

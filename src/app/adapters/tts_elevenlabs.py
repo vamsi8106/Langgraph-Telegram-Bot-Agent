@@ -1,17 +1,3 @@
-# from elevenlabs.client import ElevenLabs
-# from ..config.settings import settings
-
-# def build_tts():
-#     client = ElevenLabs(api_key=settings.ELEVENLABS_API_KEY)
-#     def _synth(text: str) -> bytes:
-#         stream = client.text_to_speech.convert(
-#             text=text,
-#             voice_id=settings.elevenlabs_voice_id,
-#             model_id=settings.elevenlabs_model_id,
-#         )
-#         return b"".join(stream)
-#     return _synth
-
 # src/app/adapters/tts_elevenlabs.py
 from __future__ import annotations
 

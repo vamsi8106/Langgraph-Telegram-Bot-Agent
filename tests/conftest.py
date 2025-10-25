@@ -1,29 +1,3 @@
-# import pytest, os
-# from app.di import build_container
-# from app.workflows.karan_graph import build_graph
-
-# @pytest.fixture
-# def graph():
-#     c = build_container()
-#     g = build_graph(c, attach_conn_for_tests=True)
-#     try:
-#         yield g
-#     finally:
-#         conn = getattr(g, "_conn", None)
-#         if conn:
-#             conn.close()
-
-# @pytest.fixture(autouse=True)
-# def _test_env(monkeypatch, tmp_path):
-#     monkeypatch.setenv("ENV", "test")
-#     monkeypatch.setenv("DEBUG", "false")
-#     monkeypatch.setenv("LOGS_DIR", str(tmp_path/"logs"))
-#     monkeypatch.setenv("APP_LOG_FILE", str(tmp_path/"logs/app.log"))
-#     # in-memory sqlite (shared cache lets graph reuse connection if needed)
-#     monkeypatch.setenv("SHORT_TERM_DB_URL", "file::memory:?cache=shared")
-#     yield
-
-
 # tests/conftest.py
 import os
 import pytest

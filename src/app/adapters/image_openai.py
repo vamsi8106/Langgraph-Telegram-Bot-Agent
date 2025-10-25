@@ -1,27 +1,3 @@
-# import base64, uuid
-# from openai import OpenAI
-# from ..config.settings import settings
-
-# def build_image_gen():
-#     client = OpenAI(api_key=settings.OPENAI_API_KEY)
-
-#     def _generate(prompt: str, size: str = "1024x1024") -> str:
-#         res = client.images.generate(
-#             model=settings.openai_image_model,
-#             prompt=prompt,
-#             size=size,
-#             quality="high",
-#         )
-#         img_b64 = res.data[0].b64_json
-#         img_bytes = base64.b64decode(img_b64)
-#         path = f"{uuid.uuid4()}.png"
-#         with open(path, "wb") as f:
-#             f.write(img_bytes)
-#         return path
-
-#     return _generate
-
-
 # src/app/adapters/image_openai.py
 import base64
 import uuid

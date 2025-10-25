@@ -1,14 +1,3 @@
-# # src/app/telemetry/__init__.py
-# from .otel import init_tracing as _init_tracing, get_tracer, current_trace_id_hex
-# from ..metrics import start_metrics_server
-
-# def init_telemetry():
-#     _init_tracing()
-#     start_metrics_server()
-
-# __all__ = ["init_telemetry", "get_tracer", "current_trace_id_hex"]
-
-
 # src/app/telemetry/__init__.py
 """
 Telemetry initialization module.
