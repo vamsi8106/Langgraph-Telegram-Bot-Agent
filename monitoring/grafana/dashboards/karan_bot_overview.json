@@ -1,0 +1,88 @@
+{
+  "id": null,
+  "uid": "karan-bot-ovw",
+  "title": "Karan Bot – Overview",
+  "tags": ["karan-bot", "telegram", "llm"],
+  "timezone": "browser",
+  "schemaVersion": 38,
+  "version": 1,
+  "editable": true,
+  "refresh": "10s",
+  "time": { "from": "now-6h", "to": "now" },
+  "panels": [
+    {
+      "type": "stat",
+      "title": "RPS (Telegram updates)",
+      "gridPos": { "h": 6, "w": 6, "x": 0, "y": 0 },
+      "targets": [
+        { "expr": "sum(rate(karan_bot_tg_updates_total[1m]))", "legendFormat": "all" }
+      ]
+    },
+    {
+      "type": "stat",
+      "title": "LLM Calls (last 1h)",
+      "gridPos": { "h": 6, "w": 6, "x": 6, "y": 0 },
+      "targets": [
+        { "expr": "sum(increase(karan_bot_llm_calls_total[1h]))", "legendFormat": "total" }
+      ]
+    },
+    {
+      "type": "timeseries",
+      "title": "Handler p95 Latency (s)",
+      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 0 },
+      "options": { "legend": { "displayMode": "table" } },
+      "targets": [
+        {
+          "expr": "histogram_quantile(0.95, sum by (le, handler) (rate(karan_bot_handler_latency_seconds_bucket[5m])))",
+          "legendFormat": "{{handler}}"
+        }
+      ],
+      "exemplars": { "enable": true }
+    },
+    {
+      "type": "timeseries",
+      "title": "LLM p95 Latency (s) per model",
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 6 },
+      "targets": [
+        {
+          "expr": "histogram_quantile(0.95, sum by (le, model) (rate(karan_bot_llm_latency_seconds_bucket[5m])))",
+          "legendFormat": "{{model}}"
+        }
+      ],
+      "exemplars": { "enable": true }
+    },
+    {
+      "type": "bargauge",
+      "title": "LLM Calls by Status (5m)",
+      "gridPos": { "h": 8, "w": 6, "x": 12, "y": 8 },
+      "targets": [
+        { "expr": "sum(increase(karan_bot_llm_calls_total[5m])) by (status)", "legendFormat": "{{status}}" }
+      ]
+    },
+    {
+      "type": "timeseries",
+      "title": "Process Memory (MB)",
+      "gridPos": { "h": 8, "w": 6, "x": 18, "y": 8 },
+      "targets": [
+        { "expr": "process_resident_memory_bytes / (1024*1024)", "legendFormat": "RSS MB" }
+      ]
+    },
+    {
+      "type": "timeseries",
+      "title": "Telegram Updates by Type (rate)",
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 14 },
+      "targets": [
+        { "expr": "sum by (type) (rate(karan_bot_tg_updates_total[1m]))", "legendFormat": "{{type}}" }
+      ]
+    },
+    {
+      "type": "stat",
+      "title": "Service Info",
+      "gridPos": { "h": 6, "w": 6, "x": 12, "y": 16 },
+      "targets": [
+        { "expr": "karan_bot_service_info", "legendFormat": "{{service_name}} ({{env}}) v{{version}}" }
+      ]
+    }
+  ],
+  "templating": { "list": [] }
+}

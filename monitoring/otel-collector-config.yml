@@ -1,0 +1,56 @@
+
+# receivers:
+#   otlp:
+#     protocols:
+#       http:  # 0.0.0.0:4318
+#       grpc:  # 0.0.0.0:4317
+
+# processors:
+#   batch:
+
+# exporters:
+#   # replaces deprecated 'logging' exporter
+#   debug:
+#     verbosity: detailed
+#   prometheus:
+#     endpoint: "0.0.0.0:8888"
+
+# service:
+#   pipelines:
+#     traces:
+#       receivers: [otlp]
+#       processors: [batch]
+#       exporters: [debug]
+#     metrics:
+#       receivers: [otlp]
+#       processors: [batch]
+#       exporters: [debug, prometheus]
+
+receivers:
+  otlp:
+    protocols:
+      http:  # listens on 0.0.0.0:4318
+      grpc:  # listens on 0.0.0.0:4317
+
+processors:
+  batch: {}
+
+exporters:
+  # human-friendly stdout for debugging
+  debug:
+    verbosity: detailed
+  # scrape endpoint for Prometheus on 0.0.0.0:8888 (and published via compose)
+  prometheus:
+    endpoint: "0.0.0.0:8888"
+
+service:
+  pipelines:
+    traces:
+      receivers: [otlp]
+      processors: [batch]
+      exporters: [debug]
+    metrics:
+      receivers: [otlp]
+      processors: [batch]
+      exporters: [debug, prometheus]
+

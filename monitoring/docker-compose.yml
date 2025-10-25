@@ -1,0 +1,109 @@
+
+
+# version: "3.9"
+
+# networks:
+#   monitoring-net:
+
+# services:
+#   prometheus:
+#     image: prom/prometheus:latest
+#     container_name: prometheus
+#     restart: unless-stopped
+#     command:
+#       - "--config.file=/etc/prometheus/prometheus.yml"
+#       - "--storage.tsdb.path=/prometheus"
+#       - "--web.enable-lifecycle"
+#     ports:
+#       - "9090:9090"
+#     volumes:
+#       - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+#     networks:
+#       - monitoring-net
+#     extra_hosts:
+#       - "host.docker.internal:host-gateway"
+
+#   grafana:
+#     image: grafana/grafana:latest
+#     container_name: grafana
+#     restart: unless-stopped
+#     ports:
+#       - "3000:3000"
+#     environment:
+#       - GF_SECURITY_ADMIN_USER=admin
+#       - GF_SECURITY_ADMIN_PASSWORD=admin
+#     volumes:
+#       - ./grafana/provisioning:/etc/grafana/provisioning:ro
+#       - ./grafana/dashboards:/var/lib/grafana/dashboards:ro
+#     networks:
+#       - monitoring-net
+#     depends_on:
+#       - prometheus
+
+#   otel-collector:
+#     image: otel/opentelemetry-collector-contrib:latest
+#     container_name: otel-collector
+#     restart: unless-stopped
+#     command: ["--config=/etc/otelcol/config.yaml"]
+#     ports:
+#       - "4318:4318"   # OTLP HTTP
+#       - "4317:4317"   # OTLP gRPC (optional)
+#       - "8888:8888"   # collector's Prometheus /metrics
+#     volumes:
+#       - ./otel-collector-config.yml:/etc/otelcol/config.yaml:ro
+#     networks:
+#       - monitoring-net
+
+# version field not needed
+networks:
+  monitoring-net: {}
+
+services:
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    restart: unless-stopped
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+      - "--storage.tsdb.path=/prometheus"
+      - "--web.enable-lifecycle"
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+    networks:
+      - monitoring-net
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    volumes:
+      - ./grafana/provisioning:/etc/grafana/provisioning:ro
+      - ./grafana/dashboards:/var/lib/grafana/dashboards:ro
+    networks:
+      - monitoring-net
+    depends_on:
+      - prometheus
+
+  otel-collector:
+    image: otel/opentelemetry-collector-contrib:latest
+    container_name: otel-collector
+    restart: unless-stopped
+    # IMPORTANT: use the canonical config path and name
+    command: ["--config=/etc/otelcol/config.yaml"]
+    ports:
+      - "4318:4318"   # OTLP HTTP (app sends traces/metrics here)
+      - "4317:4317"   # OTLP gRPC (optional)
+      - "8888:8888"   # Prometheus scrape endpoint exposed to host
+    volumes:
+      - ./otel-collector-config.yml:/etc/otelcol/config.yaml:ro
+    networks:
+      - monitoring-net
